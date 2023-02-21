@@ -6,7 +6,7 @@ import time
 app = Flask(__name__)
 
 @app.route('/')
-def index():
+def index(i=1):
     return render_template('index.html')
 
 @app.route('/')
@@ -40,7 +40,8 @@ def call_phone():
     response = requests.get(api_endpoint)
     # findmap()
 
-    requests.get('http://127.0.0.1:5000')
+    requests.get('')
+
 
     # requests.get('/new_page')
 
