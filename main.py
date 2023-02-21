@@ -1,18 +1,26 @@
 from flask import Flask, render_template, Response, redirect, url_for
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 from camera import VideoCamera
 import requests
-import time
 
 app = Flask(__name__)
 called = False
+driver = webdriver.Chrome("C:/Users/김진영/Downloads/chromedriver_win32")
+url = "http://127.0.0.1:5000/"
+driver.get(url)
+driver.implicitly_wait(1)
 
 @app.route('/')
 def index():
     global called
     if called == False:
         called = True
+        # response.headers['Cache-Control'] = 'no-store'
         return render_template('index.html')
     else:
+        # response.headers['Cache-Control'] = 'no-store'
         return render_template('indexAndMap.html')
 
 # @app.route('/')
@@ -21,14 +29,14 @@ def index():
 
 
 def gen(camera):
-    while True:
-        frame = camera.get_frame()
-        eyes_csd_sec = camera.closed_sec
-        if eyes_csd_sec >= 3:
+    # while True:
+        # frame = camera.get_frame()
+        # eyes_csd_sec = camera.closed_sec
+        # if eyes_csd_sec >= 3:
             call_phone()
             # print("hello")
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        # yield (b'--frame\r\n'
+        #        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 @app.route('/video_feed')
 def video_feed():
@@ -37,6 +45,7 @@ def video_feed():
 
 
 def findmap():
+    driver.refresh()
     return redirect(url_for('index'))
 
 """if camera spot driver is now sleeping, call the phone and give the safe destination location data."""
