@@ -4,25 +4,31 @@ import requests
 import time
 
 app = Flask(__name__)
+called = False
 
 @app.route('/')
-def index(i=1):
-    return render_template('index.html')
+def index():
+    global called
+    if called == False:
+        called = True
+        return render_template('index.html')
+    else:
+        return render_template('indexAndMap.html')
 
-@app.route('/')
-def second():
-    return render_template('indexAndMap.html')
+# @app.route('/')
+# def second():
+#     return render_template('indexAndMap.html')
 
 
 def gen(camera):
-    # while True:
-    #     frame = camera.get_frame()
-    #     eyes_csd_sec = camera.closed_sec
-        # if eyes_csd_sec >= 3:
-        call_phone()
+    while True:
+        frame = camera.get_frame()
+        eyes_csd_sec = camera.closed_sec
+        if eyes_csd_sec >= 3:
+            call_phone()
             # print("hello")
-        # yield (b'--frame\r\n'
-        #        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 @app.route('/video_feed')
 def video_feed():
@@ -30,17 +36,17 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-# def findmap():
-#     return redirect(url_for('index'))
+def findmap():
+    return redirect(url_for('index'))
 
 """if camera spot driver is now sleeping, call the phone and give the safe destination location data."""
 # @app.route('/api/data')
 def call_phone():
     api_endpoint = "https://tl9b7wjalf.execute-api.ap-northeast-2.amazonaws.com/default/helloc"
     response = requests.get(api_endpoint)
-    # findmap()
+    findmap()
 
-    requests.get('')
+    # requests.get('')
 
 
     # requests.get('/new_page')
