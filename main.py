@@ -1,6 +1,7 @@
 from flask import Flask, render_template, Response
 from camera import VideoCamera
 import requests
+import time
 
 app = Flask(__name__)
 
@@ -15,6 +16,7 @@ def gen(camera):
         eyes_csd_sec = camera.closed_sec
         if eyes_csd_sec >= 3:
             call_phone()
+            return render_template('index.html')
             # print("hello")
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
@@ -40,3 +42,15 @@ def call_phone():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
 
+# @app.route('/indexAndMap.html', methods=['GET'])
+# def make_pin():
+#     if request.method == 'GET':
+#         # 버튼 클릭 이벤트 발생시
+#         # HTML 템플릿 렌더링
+#         return render_template('index.html')
+#     else:
+#         return render_template('index.html')
+#     return 'Hello, World!'
+
+# if __name__ == '__main__':
+#     app.run()
