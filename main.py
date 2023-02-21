@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, redirect
 from camera import VideoCamera
 import requests
 import time
@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     # return render_template('index.html')
-    return render_template('indexAndMap.html')
+    return render_template('index.html')
 
 def gen(camera):
     while True:
@@ -16,7 +16,6 @@ def gen(camera):
         eyes_csd_sec = camera.closed_sec
         if eyes_csd_sec >= 3:
             call_phone()
-            return render_template('index.html')
             # print("hello")
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
@@ -32,6 +31,7 @@ def video_feed():
 def call_phone():
     api_endpoint = "https://tl9b7wjalf.execute-api.ap-northeast-2.amazonaws.com/default/helloc"
     response = requests.get(api_endpoint)
+    map()
 
     if response.status_code == 200:
         data = response.json()
@@ -41,6 +41,10 @@ def call_phone():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+
+def map():
+    # return render_template('indexAndMap.html')
+    return redirect('indexAndMap.html')
 
 # @app.route('/indexAndMap.html', methods=['GET'])
 # def make_pin():

@@ -62,23 +62,23 @@
         var places = new kakao.maps.services.Places(map);
         places.setMap(map);
 
-        // places.categorySearch('PK6', placesSearchCB, {useMapBounds:true});
+        places.categorySearch('PK6', placesSearchCB, {useMapBounds:true});
 
-        // function placesSearchCB (data, status, pagination) {
-        //     if (status === kakao.maps.services.Status.OK) {
-        //         for (var i=0; i<data.length; i++) {
-        //             displayMarker(data[i]);
-        //         }
-        //     }
-        // }
+        function placesSearchCB (data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+                for (var i=0; i<data.length; i++) {
+                    displayMarker(data[i]);
+                }
+            }
+        }
 
-        // function displayMarker(place) {
-        // // 마커를 생성하고 지도에 표시합니다
-        //     var marker = new kakao.maps.Marker({
-        //         map: map,
-        //         position: new kakao.maps.LatLng(place.y, place.x)
-        //     });
-        // }
+        function displayMarker(place) {
+        // 마커를 생성하고 지도에 표시합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.y, place.x)
+            });
+        }
 
     }); 
 </script>
