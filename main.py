@@ -7,6 +7,7 @@ import requests
 
 app = Flask(__name__)
 called = False
+
 driver = webdriver.Chrome("C:/Users/김진영/Downloads/chromedriver_win32")
 url = "http://127.0.0.1:5000/"
 driver.get(url)
@@ -21,6 +22,14 @@ def index():
         return render_template('index.html')
     else:
         # response.headers['Cache-Control'] = 'no-store'
+        return render_template('indexAndMap.html')
+
+def index():
+    called = getattr(index, 'called', False)
+    if called == False:
+        index.called = True
+        return render_template('index.html')
+    else:
         return render_template('indexAndMap.html')
 
 # @app.route('/')
