@@ -6,8 +6,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # return render_template('index.html')
+    return render_template('index.html')
+
+
+@app.route('/indexAndMap')
+def index_and_map():
     return render_template('indexAndMap.html')
+
 
 def gen(camera):
     while True:
@@ -33,6 +38,7 @@ def call_phone():
 
     if response.status_code == 200:
         data = response.json()
+        index_and_map()
         return data
     else:
         return 'Error: unable to retrieve data from API'
