@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, redirect
+from flask import Flask, render_template, Response, redirect, url_for
 from camera import VideoCamera
 import requests
 import time
@@ -42,9 +42,18 @@ def call_phone():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
 
+# def map():
+#     # return render_template('indexAndMap.html')
+#     return redirect('indexAndMap.html')
+
+@app.route('/newpage')
+def new_page():
+    # return render_template('index.html')
+    return render_template('indexAndMap.html')
+
 def map():
-    # return render_template('indexAndMap.html')
-    return redirect('indexAndMap.html')
+    return redirect(url_for('newpage'))
+
 
 # @app.route('/indexAndMap.html', methods=['GET'])
 # def make_pin():
