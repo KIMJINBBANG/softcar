@@ -45,7 +45,7 @@ def video_feed():
 
 
 def findmap():
-    driver.refresh()
+    # driver.refresh()
     return redirect(url_for('index'))
 
 """if camera spot driver is now sleeping, call the phone and give the safe destination location data."""
